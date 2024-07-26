@@ -31,10 +31,12 @@ color-scheme: auto-default-dark
 markdown: GFM
 
 # Build settings
-remote_theme: godalming123/minimal
+theme: minima
 plugins:
-  - jekyll-remote-theme
   - jekyll-feed
+
+minima:
+  skin: auto
 
 # Exclude from processing.
 # The following items will not be processed, by default.
