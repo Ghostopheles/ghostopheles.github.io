@@ -20,6 +20,7 @@
 
 title: Ghost's Lore
 email: ghost@ghst.tools
+repository: Ghostopheles/ghostopheles.github.io
 baseurl: "" # the subpath of your site, e.g. /blog
 domain: "lore.ghst.tools"
 url: "https://lore.ghst.tools" # the base hostname & protocol for your site, e.g. http://example.com
