@@ -31,8 +31,9 @@ color-scheme: auto-default-dark
 markdown: GFM
 
 # Build settings
-theme: minima
+remote_theme: jekyll/minima
 plugins:
+  - jekyll-remote-theme
   - jekyll-feed
 
 minima:
