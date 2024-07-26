@@ -26,7 +26,6 @@ domain: "lore.ghst.tools"
 url: "https://lore.ghst.tools" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ghostopheles
 github_username:  Ghostopheles
-color-scheme: auto-default-dark
 
 markdown: GFM
 
@@ -42,6 +41,8 @@ minima:
     - { platform: github,  user_url: "https://github.ghst.tools" }
     - { platform: twitter, user_url: "https://twitter.ghst.tools", title: "Ghostopheles" }
     - { platform: twitter, user_url: "https://algalon.ghst.tools", title: "Algalon" }
+
+show_excerpts: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
