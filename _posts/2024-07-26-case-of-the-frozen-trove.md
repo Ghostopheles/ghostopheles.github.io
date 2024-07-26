@@ -8,7 +8,22 @@ tags: wow lua bugs
 
 Recently, there's been a number of (mostly Remix-related) Transmog addons experiencing an issue that causes the game to lock up on first login and never* recover. Most of these addons have implemented workarounds for the issue but I figured I'd take the time to document the actual cause.
 
-As of now, I believe **Trove Tally** is the only one still affected.
+**Disclaimer**: Most of my testing was done *before* the release of the 11.0.0 prepatch. The information below should still be accurate.
+
+### Update 07/26/2024
+- I believe **Trove Tally** is the only addon that is still actively causing this bug to occur. I made an attempt to look into the addon code and figure out exactly where the problem was living, but made little progress.
+- I've been hearing reports that the occurence of this bug is no longer limited to Remix characters.
+
+**What to do:** 
+- If your game is freezing indefinitely just after the initial loading screen, disable the Trove Tally addon before logging in. I'd recommend uninstalling the addon entirely given the nature of the issues it causes.
+
+**But how do I disable addons before logging in?**
+- Click the "Menu" button at the top of the character select screen, then click "Addons" to manage your addons.
+
+## The TLDR
+Certain addons are requesting item data for all the appearances your character can possibly learn, right at login. This leads to the backend **DB Rec Callbacks** system becoming overwhelmed and causes the game to get stuck in some sort of infinite loop and freeze indefinitely. This usually requires you to manually kill the task, or, after a certain amount of time, the game will run out of memory and crash itself.
+
+This issue has likely been exacerbated by the release of patch 11.0.0 because it nearly tripled the number of appearances available to any given character.
 
 # The Issue
 Somewhere deep down within the game client there's some code responsible for allocating memory for these item callbacks - the game calls them **DB Rec Callbacks**. Once you reach a certain number of these callbacks in memory the game will lock up and seemingly create an infinite loop of memory leaking until the game finally goes "we've run out memory, man." and gives up.
@@ -32,9 +47,8 @@ The meat of the issue is that the action of fetching an item from the DB2s is si
 At the end of the day, this sort of catastrophic client crash should probably be something that addons can't achieve on accident. The combination of popular Transmog addons caching known items at login, the extremely large number of appearances available to Remix characters, and the requests going out during the busiest period of the loading cycle creates a perfect storm for this trio to demolish the client.
 
 # The Code
-
 ```lua
-local MAX_ITEMS = 25000;
+local MAX_ITEMS = 25000; -- tweak this number up until your game freezes just after the loading screen ends
 
 function CACHE_TEST()
     print("Running cache test...");
@@ -83,7 +97,9 @@ f:SetScript("OnEvent", CONSOLE_MESSAGE);
 
 Essentially, we're looping over all of the Transmog categories, grabbing all the appearanceIDs for those categories. We then grab all of the appearance sourceIDs for each appearanceID. From the sourceID, we find the itemID, then add it to a list and request all of the items at once at the end.
 
-At the top of the example, there's a constant called `MAX_ITEMS`, this constrains the number of requests we can make. I used this for 'limit testing' to see where the game started breaking. For my Remix character on the Beta, the breakage began around `MAX_ITEMS=14000`. Outside of manually tweaking that limit, this where the output from the `HeapUsage` command can be helpful though, as it gives us an 'alloc percentage' and tells us how many total allocations there have been. **Note:** This command is not available in release clients. For my testing using this command I was on the TWW Beta, 11.0.2.55522
+At the top of the example, there's a constant called `MAX_ITEMS`, this constrains the number of requests we can make. I used this for 'limit testing' to see where the game started breaking. For my Remix character on the Beta, the breakage began around `MAX_ITEMS=14000`. Outside of manually tweaking that limit, this where the output from the `HeapUsage` command can be helpful though, as it gives us an 'alloc percentage' and tells us how many total allocations there have been. 
+
+**Note:** This command is not available in release clients. For my testing using this command I was on the TWW Beta, 11.0.2.55522
 
 # Repro
 Reproducing this bug is quite simple but it requires a bit of finesse to extract any useful information from it during the process, since, as mentioned above, it freezes the client indefinitely. However, since this data loading is asynchronous, we get a frame or two to find some data to print to the chat box before it all falls apart.
