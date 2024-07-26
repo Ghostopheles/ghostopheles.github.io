@@ -27,7 +27,8 @@ url: "https://lore.ghst.tools" # the base hostname & protocol for your site, e.g
 twitter_username: ghostopheles
 github_username:  Ghostopheles
 
-markdown: GFM
+kramdown:
+  syntax_highlighter: coderay
 
 # Build settings
 remote_theme: jekyll/minima
