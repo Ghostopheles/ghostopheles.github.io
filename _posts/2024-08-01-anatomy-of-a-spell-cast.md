@@ -20,8 +20,10 @@ Before going any further, here's a broad outline of a spell cast:
 - Client generates a spell cast **request** packet and sends it off to the server
 - Server evaluates some things, then returns a spell cast packet (minus the 'request' part)
 - Client receives this packet, plays necessary animations, and so on
+
 # The Client
 Locally, on your client, some magic happens in order to prepare the world for your incoming spell cast request. Step 1 is to create the packet that we'll send off to the server. Once we have this packet, we can actually send it off and the rest happens on the server-side. Except the, y'know, actually displaying the spell on the client.
+
 ## The Request Packet
 I obviously can't speak to the internal order of the client, as I can't *exactly* read the code in there, but I can at least give you all the steps necessary to create the mythical SpellCastRequest packet.
 
@@ -49,6 +51,7 @@ Additionally, there's a few **optional** attributes we can add for (I assume) th
 - Orientation
 - MapID
 In this context, a 'location' is a struct containing a TransportGUID (?) and the XYZ coordinates of the location.
+
 ### Missile Trajectory
 No, this one has nothing to do with actual missiles (depending on the spell?), instead 'missile' is a reference to any sort of moving or flying projectile relevant to the spell. An example would be the flying glaive in a Demon Hunter's 'Throw Glaive' ability.
 
