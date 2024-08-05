@@ -65,6 +65,7 @@ This one is purely for fun. It shows the number of each character gender / body 
 On top of the graphs shown above, I also have graphs showing the number of each class per race. There's far too many to list here, so I'm planning on rounding them up at the end of the event for one big super-post. If you're *really* interested in seeing these graphs *right now*, however, you can.
 - Simply navigate to `https://lore.ghst.tools/assets/img/08-04-24-graphs/Classes_<RaceNameHere>.png` and you'll be able to see the data.
     - The race naming is in title case, so `Highmountain Tauren` becomes `HighmountainTauren`, `Mag'har Orc` becomes `MagharOrc`, and so on. Play around with it if you don't get it immediately.
+    - Also `Undead/Forsaken` -> `Scourge` (Scourge is the internal name for the race)
 
 # Remarks
 As always, day one was amazing. Got to see plenty of interesting characters, tons of people, and the vibe was just super positive. And that's the kind of thing that these events are great at doing. They let you forget the stress and anxiety present in the real world and hang out in a fantasy world for a few hours, doing whatever it is that makes you happy. And I think it's important for everyone to have that kind of opportunity to escape from real-life every once in a while.
